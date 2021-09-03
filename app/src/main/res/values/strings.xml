@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TinkoffFintechContest</string>
+    <string name="website_name">developerslife</string>
+    <string name="main_image_content_desc">gif</string>
+    <string name="text_placeholder_long">Текст, описывающий ситуацию в меме, изображенном на элементе ImageView</string>
+    <string name="text_placeholder_short">Текст, описывающий мем</string>
+</resources>
