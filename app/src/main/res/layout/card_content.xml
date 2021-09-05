@@ -34,7 +34,6 @@
             android:background="@drawable/shape_textview_gradient"
             android:maxLines="3"
             android:padding="18dp"
-            android:text="@string/text_placeholder_short"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="@color/white"
             android:textSize="18sp"
