@@ -27,10 +27,10 @@
             android:id="@+id/error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="14dp"
             android:textAlignment="center"
             android:textSize="18sp"
-            tools:layout_marginHorizontal="24dp"
             tools:text="@string/unknown_error_desc" />
 
         <com.google.android.material.button.MaterialButton

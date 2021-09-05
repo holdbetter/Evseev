@@ -3,6 +3,7 @@ package com.holdbetter.tinkofffintechcontest.viewmodel;
 import static com.holdbetter.tinkofffintechcontest.MainActivity.DEFAULT_PAGER_SIZE;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -18,6 +19,7 @@ import com.holdbetter.tinkofffintechcontest.services.ServiceProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
@@ -36,8 +38,8 @@ public class MemeViewModel extends ViewModel {
         return currentPage;
     }
 
-    public Maybe<Meme> getMeme(int position) {
-        return Observable.concat(getCachedMeme(position), getFreshMeme())
+    public Maybe<Meme> getMeme(int position, View progressIndicator) {
+        return Observable.concat(getCachedMeme(position), getFreshMeme(progressIndicator))
                 .firstElement();
     }
 
@@ -50,7 +52,7 @@ public class MemeViewModel extends ViewModel {
         }).doOnNext(meme -> Log.d("GET_MEME", "from cache"));
     }
 
-    private Observable<Meme> getFreshMeme() {
+    private Observable<Meme> getFreshMeme(View progressIndicator) {
         return ServiceProvider.getApi()
                 .getMeme()
                 .map(this::handleResponse)
@@ -62,7 +64,18 @@ public class MemeViewModel extends ViewModel {
                     return Flowable.error(e);
                 }))
                 .flatMapObservable(memeResponse -> Observable.just(memeResponse.body()))
-                .doOnNext(this::cache);
+                .doOnNext(this::cache)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> {
+                    if (progressIndicator != null) {
+                        progressIndicator.setVisibility(View.VISIBLE);
+                    }
+                })
+                .doFinally(() -> {
+                    if (progressIndicator != null) {
+                        progressIndicator.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void cache(Meme meme) throws CloneNotSupportedException {

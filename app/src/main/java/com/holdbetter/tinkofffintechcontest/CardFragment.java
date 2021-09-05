@@ -66,7 +66,16 @@ public class CardFragment extends Fragment {
 
     @NonNull
     private Disposable getMeme(int position) {
-        return memeViewModel.getMeme(position)
+        // provide progress
+        FrameLayout holder = (FrameLayout) getView();
+        View cardProgress = null;
+        if (holder != null) {
+            holder.removeAllViews();
+            cardProgress = getLayoutInflater().inflate(R.layout.card_progress, holder, false);
+            holder.addView(cardProgress);
+        }
+
+        return memeViewModel.getMeme(position, cardProgress)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateUIOnMemeReceived, this::handleError);
     }
