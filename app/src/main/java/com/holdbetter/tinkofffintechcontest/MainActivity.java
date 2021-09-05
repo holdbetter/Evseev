@@ -1,5 +1,6 @@
 package com.holdbetter.tinkofffintechcontest;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private MemePagerAdapter setupViewPager(ViewPager2 memePager, MemeViewModel viewModel) {
         MemePagerAdapter adapter = new MemePagerAdapter(this);
         memePager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
-        float px = convertDpToPx(24);
+        float px = convertDpToPx(24, this);
         memePager.setPageTransformer(new MarginPageTransformer((int) px));
         memePager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -49,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
         return adapter;
     }
 
-    private int convertDpToPx(int dp) {
+    public static int convertDpToPx(int dp, Context context) {
         float px = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 dp,
-                this.getResources().getDisplayMetrics()
+                context.getResources().getDisplayMetrics()
         );
         return (int) px;
     }

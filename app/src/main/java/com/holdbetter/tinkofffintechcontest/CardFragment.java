@@ -1,5 +1,7 @@
 package com.holdbetter.tinkofffintechcontest;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -146,10 +149,17 @@ public class CardFragment extends Fragment {
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(getContext());
+            circularProgressDrawable.setStrokeWidth(MainActivity.convertDpToPx(4, getContext()));
+            circularProgressDrawable.setCenterRadius(MainActivity.convertDpToPx(20, getContext()));
+            circularProgressDrawable.start();
+
             Glide.with(this)
                     .asGif()
                     .apply(options)
                     .load(meme.url)
+                    .placeholder(circularProgressDrawable)
+                    .error(R.drawable.my_bad)
                     .into(memeImage);
         }
     }
