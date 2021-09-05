@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">TinkoffFintechContest</string>
-    <string name="website_name">developerslife</string>
+    <string name="website_name">https://developerslife.ru/random?json=true</string>
     <string name="main_image_content_desc">gif</string>
-    <string name="text_placeholder_long">Текст, описывающий ситуацию в меме, изображенном на элементе ImageView</string>
     <string name="text_placeholder_short">Текст, описывающий мем</string>
+    <string name="text_placeholder_long">Текст, описывающий происходящую ситуацию в изображении, именуемым мемом. Иногда этот текст может быть больше обычного</string>
+    <string name="on_error_image_desc">onErrorImage</string>
+    <string name="no_internet_desc">Кажется, кто-то забыл включить интернет</string>
+    <string name="host_error_desc">Это похоже на ошибку на сервера, попробуйте зайти позже или обновить</string>
+    <string name="client_error_desc">Правила игры изменились и мы не в силах это исправить, попробуйте обновить приложение или нажмите на кнопочку, ну а вдруг</string>
+    <string name="unknown_error_desc">Это ошибка похожа на что-то страшное, мы даже не знаем что это, попробуйте обновить приложение или нажмите на кнопочку, ну а вдруг</string>
+    <string name="no_internet_btn">Я подключился</string>
+    <string name="error_refresh_btn">Обновить</string>
+    <string name="image_secure_desc">Source is secure</string>
 </resources>

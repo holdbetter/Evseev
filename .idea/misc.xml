@@ -4,12 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/gif_shape.xml" value="0.2703125" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/ic_baseline_security_24.xml" value="0.310126582278481" />
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/ic_round_backward_24.xml" value="0.22763157894736843" />
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/ic_round_forward_24.xml" value="0.22763157894736843" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/shape_gif.xml" value="0.310126582278481" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/shape_header_field.xml" value="0.310126582278481" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/shape_header_textview.xml" value="0.310126582278481" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/state_round_backward_24.xml" value="0.22763157894736843" />
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/textview_background_gradient.xml" value="0.12324561403508771" />
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/drawable/textview_shape_gradient.xml" value="0.22763157894736843" />
-        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/card_content.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/card_error.xml" value="0.25" />
         <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/card_fragment.xml" value="0.264" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/card_holder.xml" value="0.1" />
+        <entry key="..\:/Users/holdbetter/AndroidStudioProjects/TinkoffFintechContest/app/src/main/res/layout/website_header.xml" value="0.30085470085470084" />
       </map>
     </option>
   </component>

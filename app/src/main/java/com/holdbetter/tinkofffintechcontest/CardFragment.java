@@ -1,28 +1,157 @@
 package com.holdbetter.tinkofffintechcontest;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.holdbetter.tinkofffintechcontest.databinding.CardFragmentBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
+import com.holdbetter.tinkofffintechcontest.model.ClientException;
+import com.holdbetter.tinkofffintechcontest.model.HostException;
+import com.holdbetter.tinkofffintechcontest.model.Meme;
+import com.holdbetter.tinkofffintechcontest.viewmodel.MemeViewModel;
 
-public class CardFragment extends Fragment
-{
-    private CardFragment() {}
+import java.io.IOException;
 
-    public static CardFragment getInstance() {
-        return new CardFragment();
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+
+public class CardFragment extends Fragment {
+    private final CompositeDisposable disposables = new CompositeDisposable();
+    private MemeViewModel memeViewModel;
+    private int position;
+
+    public CardFragment() {
+    }
+
+    public static CardFragment getInstance(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+
+        CardFragment cardFragment = new CardFragment();
+        cardFragment.setArguments(bundle);
+
+        return cardFragment;
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        return CardFragmentBinding.inflate(inflater, container, false).getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.card_holder, container, false);
+        memeViewModel = new ViewModelProvider(requireActivity()).get(MemeViewModel.class);
+        position = getArguments().getInt("position");
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        disposables.add(getMeme(position));
+    }
+
+    @NonNull
+    private Disposable getMeme(int position) {
+        return memeViewModel.getMeme(position)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateUIOnMemeReceived, this::handleError);
+    }
+
+    private void handleError(Throwable error) {
+        FrameLayout holder = (FrameLayout) getView();
+        if (holder != null) {
+            holder.removeAllViews();
+
+            View cardError = getLayoutInflater().inflate(R.layout.card_error, holder, false);
+            ImageView errorImage = cardError.findViewById(R.id.error_image);
+            TextView errorText = cardError.findViewById(R.id.error_text);
+            MaterialButton again = cardError.findViewById(R.id.again_button);
+            again.setOnClickListener(v -> disposables.add(getMeme(position)));
+
+            ImageView imageSecure = getActivity().findViewById(R.id.secure_image);
+            imageSecure.setEnabled(false);
+
+            if (error instanceof IOException) {
+                setupErrorViews(errorImage, errorText, again, R.drawable.internet_problem, R.string.no_internet_desc, R.string.no_internet_btn);
+            } else if (error instanceof HostException) {
+                setupErrorViews(errorImage, errorText, again, R.drawable.host_error, R.string.host_error_desc, R.string.error_refresh_btn);
+            } else if (error instanceof ClientException) {
+                setupErrorViews(errorImage, errorText, again, R.drawable.my_bad, R.string.client_error_desc, R.string.error_refresh_btn);
+            } else {
+                setupErrorViews(errorImage, errorText, again, R.drawable.my_bad, R.string.unknown_error_desc, R.string.error_refresh_btn);
+            }
+
+            holder.addView(cardError);
+        }
+    }
+
+    private void setupErrorViews(ImageView errorImage, TextView errorText, MaterialButton again, @DrawableRes int errorDrawableId, @StringRes int errorDescriptionId, @StringRes int errorButtonText) {
+        Glide.with(this)
+                .load(errorDrawableId)
+                .apply(new RequestOptions().centerCrop())
+                .into(errorImage);
+
+        errorText.setText(errorDescriptionId);
+        again.setText(errorButtonText);
+    }
+
+    private void updateUIOnMemeReceived(Meme meme) {
+        nextMemeButtonEnable();
+
+        FrameLayout holder = (FrameLayout) getView();
+        if (holder != null) {
+            View cardContent = holder.findViewById(R.id.card_content);
+            if (cardContent == null) {
+                holder.removeAllViews();
+
+                if (!meme.isCache) {
+                    updateMainUIOnUserOnline();
+                }
+
+                cardContent = getLayoutInflater().inflate(R.layout.card_content, holder, false);
+                cardContent.setClipToOutline(true);
+                holder.addView(cardContent);
+            }
+
+            TextView memeDescription = cardContent.findViewById(R.id.meme_description);
+            memeDescription.setMovementMethod(new ScrollingMovementMethod());
+            ImageView memeImage = cardContent.findViewById(R.id.meme_image);
+
+            memeDescription.setText(meme.description);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+            Glide.with(this)
+                    .asGif()
+                    .apply(options)
+                    .load(meme.url)
+                    .into(memeImage);
+        }
+    }
+
+    private void nextMemeButtonEnable() {
+        MaterialButton nextMeme = getActivity().findViewById(R.id.next_meme);
+        nextMeme.setEnabled(true);
+    }
+
+    private void updateMainUIOnUserOnline() {
+        ImageView imageSecure = getActivity().findViewById(R.id.secure_image);
+        imageSecure.setEnabled(true);
     }
 }

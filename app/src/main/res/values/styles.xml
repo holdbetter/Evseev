@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Widget.MaterialComponents.Button.TextButton.Icon.Circle" parent="Widget.MaterialComponents.Button.TextButton.Icon">
-        <item name="android:elevation">2dp</item>
-        <item name="rippleColor">@color/gray_ripple</item>
+        <item name="android:elevation">4dp</item>
+        <item name="rippleColor">@color/ripple</item>
         <item name="iconSize">50dp</item>
         <item name="iconPadding">0dp</item>
         <item name="android:insetLeft">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:insetRight">0dp</item>
-        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
         <item name="iconGravity">textStart</item>
-        <item name="backgroundTint">@color/white</item>
+        <item name="backgroundTint">@color/black_matte</item>
         <item name="cornerFamily">rounded</item>
-        <item name="cornerRadius">40dp</item>
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="cornerRadius">35dp</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
     </style>
 </resources>
