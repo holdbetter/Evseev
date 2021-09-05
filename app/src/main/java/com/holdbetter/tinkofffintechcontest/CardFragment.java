@@ -189,6 +189,9 @@ public class CardFragment extends Fragment {
 
         @Override
         public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+            if (dataSource == DataSource.REMOTE) {
+                updateMainUIOnUserOnline();
+            }
             return false;
         }
     }
